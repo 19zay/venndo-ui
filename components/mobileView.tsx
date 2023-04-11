@@ -22,7 +22,7 @@ import {
     Search2Icon,
     ChevronLeftIcon
   } from "@chakra-ui/icons"
-  import { BsChatDots } from "react-icons/bs"
+  import { ChatIcon } from "@chakra-ui/icons"
 
 
 const MobileView = () => {
@@ -151,7 +151,7 @@ const MobileView = () => {
                     ml="4rem"
                     fontSize="1.3rem"
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
             </Flex>
             <Divider 
@@ -192,7 +192,7 @@ const MobileView = () => {
                     ml="4rem"
                     fontSize="1.3rem"
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
             </Flex>
             <Divider 
@@ -233,7 +233,7 @@ const MobileView = () => {
                     ml="4rem"
                     fontSize="1.3rem"
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
             </Flex>
             <Divider 
@@ -274,7 +274,7 @@ const MobileView = () => {
                     ml="4rem"
                     fontSize="1.3rem"
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
             </Flex>
             <Divider 
@@ -315,7 +315,7 @@ const MobileView = () => {
                     ml="4rem"
                     fontSize="1.3rem"
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
             </Flex>
             <Divider 
@@ -356,7 +356,7 @@ const MobileView = () => {
                     ml="4rem"
                     fontSize="1.3rem"
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
             </Flex>
             <Divider 

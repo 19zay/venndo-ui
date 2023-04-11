@@ -22,8 +22,7 @@ import {
     Search2Icon,
     ChevronLeftIcon
   } from "@chakra-ui/icons"
-  import { BsChatDots } from "react-icons/bs"
-  import DemoImg from "../images/img1.png"
+  import { ChatIcon } from "@chakra-ui/icons"
 
 const DesktopView = () => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -152,7 +151,7 @@ const DesktopView = () => {
                     ml={["","","11rem","11rem"]}
                     fontSize={["","","2rem","2rem"]}
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
                 
             </Flex>
@@ -193,7 +192,7 @@ const DesktopView = () => {
                     ml={["","","11rem","11rem"]}
                     fontSize={["","","2rem","2rem"]}
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
                 
             </Flex>
@@ -234,7 +233,7 @@ const DesktopView = () => {
                     ml={["","","11rem","11rem"]}
                     fontSize={["","","2rem","2rem"]}
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
                 
             </Flex>
@@ -275,7 +274,7 @@ const DesktopView = () => {
                     ml={["","","11rem","11rem"]}
                     fontSize={["","","2rem","2rem"]}
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
                 
             </Flex>
@@ -316,7 +315,7 @@ const DesktopView = () => {
                     ml={["","","11rem","11rem"]}
                     fontSize={["","","2rem","2rem"]}
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
                 
             </Flex>
@@ -357,7 +356,7 @@ const DesktopView = () => {
                     ml={["","","11rem","11rem"]}
                     fontSize={["","","2rem","2rem"]}
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
                 
             </Flex>
@@ -398,7 +397,7 @@ const DesktopView = () => {
                     ml={["","","11rem","11rem"]}
                     fontSize={["","","2rem","2rem"]}
                 >
-                    <BsChatDots/>
+                    <ChatIcon/>
                 </Text>
                 
             </Flex>
