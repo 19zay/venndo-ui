@@ -1,26 +1,9 @@
 import Head from 'next/head'
-import { 
-  Box,
-  Button,
-  useColorMode,
-  Container,
-  SimpleGrid,
-  Flex,
-  useColorModeValue,
-  Heading,
-  Text,
-  Input,
-  InputGroup,
-  InputLeftElement
- } from '@chakra-ui/react'
 import {
-  SunIcon,
-  MoonIcon,
-  PhoneIcon,
-  Search2Icon,
-  ChevronLeftIcon
-} from "@chakra-ui/icons"
-import MainDiv from '../../components/mainDiv'
+  Flex
+ } from '@chakra-ui/react'
+import DesktopView from '../../components/desktopView'
+import MobileView from '../../components/mobileView'
 
 
 export default function Home() {
@@ -39,7 +22,8 @@ export default function Home() {
         justifyContent="center"
         alignItems="center"
       >
-        <MainDiv/>
+        <DesktopView/>
+        <MobileView/>
       </Flex>
     </>
   )
