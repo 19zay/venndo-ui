@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Head>
         <title>VENNDO</title>
-        <meta name="description" content="VENNDO UI" />
+        <meta name="description" content="VENNDO TASK" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

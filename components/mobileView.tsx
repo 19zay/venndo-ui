@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { 
     Box,
     Button,
@@ -12,7 +12,8 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
-    Image,
+    // Image,
+    Spinner,
     Divider
    } from '@chakra-ui/react'
 
@@ -23,26 +24,57 @@ import {
     ChevronLeftIcon
   } from "@chakra-ui/icons"
   import { ChatIcon } from "@chakra-ui/icons"
+  import Image from 'next/image'
 
+  interface User {
+    name: string;
+    location: string;
+    avatarUrl: string;
+  }
 
 const MobileView = () => {
 
     //Colormode
     const { colorMode, toggleColorMode } = useColorMode();
     const firstDiv = useColorModeValue("linear-gradient(to right, #162961, #3969b9)","linear-gradient(to right, #28355e, #4e67b6);")
-    const secondDiv = useColorModeValue("#eef6ff","#222636")
+    const secondDiv = useColorModeValue("white","#222636")
     const header = useColorModeValue("white","")
     const subHeader = useColorModeValue("white","")
     const input = useColorModeValue("white","#dedede")
 
+     // Fetch API
+     const [searchQuery, setSearchQuery] = useState("");
+     const [user, setUser] = useState<User | null>(null);
+     const [error, setError] = useState<Error | null>(null);
+     const [isLoading, setIsLoading] = useState(false);
+ 
+     async function handleSearch() {
+       setIsLoading(true);
+       setError(null);
+       try {
+         const response = await fetch(`https://api.github.com/users/${searchQuery}`);
+         if (!response.ok) {
+           throw new Error(`GitHub API returned ${response.status} ${response.statusText}`);
+         }
+         const data = await response.json();
+         setUser({
+           name: data.name ?? data.login,
+           location: data.location ?? "",
+           avatarUrl: data.avatar_url,
+         });
+       } catch (error: unknown) {
+         setError(error as Error);
+       } finally {
+         setIsLoading(false);
+       }
+     }
   return (
     <Flex
      display={{ base: 'flex', md: 'none' }}
-     overflow="hidden"
     >
      <SimpleGrid
       columns={1} 
-      mt="2rem"
+      mt="1rem"
      >
         <Flex
             bg={firstDiv}
@@ -50,6 +82,7 @@ const MobileView = () => {
             h="16rem"
             flexDir="column"
             borderRadius="0.7rem 0.7rem 0 0"
+            boxShadow="lg"
         >
             <Flex
                 gap="14rem"
@@ -80,17 +113,12 @@ const MobileView = () => {
                 color={header}
                 mt="1rem"
                 >
-                    Search
+                    Github Users
                 </Heading>
-                <Text
-                    color={subHeader}
-                >
-                    48 Results
-                </Text>
                 <Flex
                     justifyContent="center"
                     alignItems="center"
-                    mt="1.5rem"
+                    mt="0.7rem"
                 >
                     <InputGroup
                     >
@@ -100,12 +128,22 @@ const MobileView = () => {
                     children={<Search2Icon color='black' />}
                     />
                     <Input 
-                    w={["15rem","15rem","20rem","20rem"]}
-                    h={["2.5rem","2.5rem","2.8rem","2.8rem"]}
+                    w="14rem"
+                    h="2.5rem"
                     bg={input}
+                    color="black"
+                    value={searchQuery} 
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     </InputGroup>
                 </Flex>
+                <Button
+                    onClick={handleSearch}
+                    mt="1rem"
+                    isLoading={isLoading}
+                >
+                    {isLoading ? <Spinner /> : "Search"}
+                </Button>
             </Flex>
         </Flex>
 
@@ -113,257 +151,61 @@ const MobileView = () => {
         <Flex
             bg={secondDiv}
             w="21rem"
-            h="24rem"
+            h="22rem"
             borderRadius="0 0 0.7rem 0.7rem"
             flexDir="column"
             overflowY="scroll"
+            boxShadow="lg"
             p="1.6rem"
         >
-            <Flex
-                flexDir="row"
-            >
-                <Image
-                    src="/images/img1.png"
-                    alt=""
-                    boxSize="4rem"
-                    borderRadius='full'
+            {user && (
+                <>
+                    <Flex
+                        flexDir="row"
+                    >
+                        <Image 
+                            src={user.avatarUrl} 
+                            alt={user.name} 
+                            width={100} 
+                            height={100}
+                            style={{ borderRadius: '100%', width:"4rem", height:"4rem" }}
+                            decoding="async"
+                            priority
+                        />
+
+                        <Flex
+                            flexDir="column"
+                            mt="0.7rem"
+                            ml="0.7rem"
+                        >
+                            <Heading
+                                size="xs"
+                            >
+                                {user.name}
+                            </Heading>
+                            <Text
+                                fontSize="0.8rem"
+                            >
+                                {user.location}
+                            </Text>
+                        </Flex>
+
+                        <Text
+                            mt="0.5rem"
+                            ml="auto"
+                            fontSize="1.4rem"
+                        >
+                            <ChatIcon/>
+                        </Text>
+                    </Flex>
+
+                    <Divider 
+                        orientation='horizontal' 
+                        mt={["1rem","1rem","1rem","1rem"]}
+                        mb={["1rem","1rem","1rem","1rem"]}
                 />
-
-                <Flex
-                    flexDir="column"
-                    mt="0.7rem"
-                    ml="0.7rem"
-                >
-                    <Heading
-                        size="xs"
-                    >
-                        Damilola Oyeniyi
-                    </Heading>
-                    <Text
-                        fontSize="0.8rem"
-                    >
-                        Nigeria
-                    </Text>
-                </Flex>
-
-                <Text
-                    mt="0.9rem"
-                    ml="4rem"
-                    fontSize="1.3rem"
-                >
-                    <ChatIcon/>
-                </Text>
-            </Flex>
-            <Divider 
-                orientation='horizontal' 
-                mt="1rem"
-                mb="1rem"
-            />
-
-<Flex
-                flexDir="row"
-            >
-                <Image
-                    src="/images/img1.png"
-                    alt=""
-                    boxSize="4rem"
-                    borderRadius='full'
-                />
-
-                <Flex
-                    flexDir="column"
-                    mt="0.7rem"
-                    ml="0.7rem"
-                >
-                    <Heading
-                        size="xs"
-                    >
-                        Damilola Oyeniyi
-                    </Heading>
-                    <Text
-                        fontSize="0.8rem"
-                    >
-                        Nigeria
-                    </Text>
-                </Flex>
-
-                <Text
-                    mt="0.9rem"
-                    ml="4rem"
-                    fontSize="1.3rem"
-                >
-                    <ChatIcon/>
-                </Text>
-            </Flex>
-            <Divider 
-                orientation='horizontal' 
-                mt="1rem"
-                mb="1rem"
-            />
-
-<Flex
-                flexDir="row"
-            >
-                <Image
-                    src="/images/img1.png"
-                    alt=""
-                    boxSize="4rem"
-                    borderRadius='full'
-                />
-
-                <Flex
-                    flexDir="column"
-                    mt="0.7rem"
-                    ml="0.7rem"
-                >
-                    <Heading
-                        size="xs"
-                    >
-                        Damilola Oyeniyi
-                    </Heading>
-                    <Text
-                        fontSize="0.8rem"
-                    >
-                        Nigeria
-                    </Text>
-                </Flex>
-
-                <Text
-                    mt="0.9rem"
-                    ml="4rem"
-                    fontSize="1.3rem"
-                >
-                    <ChatIcon/>
-                </Text>
-            </Flex>
-            <Divider 
-                orientation='horizontal' 
-                mt="1rem"
-                mb="1rem"
-            />
-
-<Flex
-                flexDir="row"
-            >
-                <Image
-                    src="/images/img1.png"
-                    alt=""
-                    boxSize="4rem"
-                    borderRadius='full'
-                />
-
-                <Flex
-                    flexDir="column"
-                    mt="0.7rem"
-                    ml="0.7rem"
-                >
-                    <Heading
-                        size="xs"
-                    >
-                        Damilola Oyeniyi
-                    </Heading>
-                    <Text
-                        fontSize="0.8rem"
-                    >
-                        Nigeria
-                    </Text>
-                </Flex>
-
-                <Text
-                    mt="0.9rem"
-                    ml="4rem"
-                    fontSize="1.3rem"
-                >
-                    <ChatIcon/>
-                </Text>
-            </Flex>
-            <Divider 
-                orientation='horizontal' 
-                mt="1rem"
-                mb="1rem"
-            />
-
-<Flex
-                flexDir="row"
-            >
-                <Image
-                    src="/images/img1.png"
-                    alt=""
-                    boxSize="4rem"
-                    borderRadius='full'
-                />
-
-                <Flex
-                    flexDir="column"
-                    mt="0.7rem"
-                    ml="0.7rem"
-                >
-                    <Heading
-                        size="xs"
-                    >
-                        Damilola Oyeniyi
-                    </Heading>
-                    <Text
-                        fontSize="0.8rem"
-                    >
-                        Nigeria
-                    </Text>
-                </Flex>
-
-                <Text
-                    mt="0.9rem"
-                    ml="4rem"
-                    fontSize="1.3rem"
-                >
-                    <ChatIcon/>
-                </Text>
-            </Flex>
-            <Divider 
-                orientation='horizontal' 
-                mt="1rem"
-                mb="1rem"
-            />
-
-<Flex
-                flexDir="row"
-            >
-                <Image
-                    src="/images/img1.png"
-                    alt=""
-                    boxSize="4rem"
-                    borderRadius='full'
-                />
-
-                <Flex
-                    flexDir="column"
-                    mt="0.7rem"
-                    ml="0.7rem"
-                >
-                    <Heading
-                        size="xs"
-                    >
-                        Damilola Oyeniyi
-                    </Heading>
-                    <Text
-                        fontSize="0.8rem"
-                    >
-                        Nigeria
-                    </Text>
-                </Flex>
-
-                <Text
-                    mt="0.9rem"
-                    ml="4rem"
-                    fontSize="1.3rem"
-                >
-                    <ChatIcon/>
-                </Text>
-            </Flex>
-            <Divider 
-                orientation='horizontal' 
-                mt="1rem"
-                mb="1rem"
-            />
+                </>
+            )}
         </Flex>
      </SimpleGrid> 
     </Flex>
